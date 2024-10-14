@@ -22,7 +22,7 @@ export class Poll extends Workers {
             this.bot.log(this.bot.isMobile, 'POLL', 'Completed the poll successfully')
         } catch (error) {
             await page.close()
-            this.bot.log(this.bot.isMobile, 'POLL', 'An error occurred:' + error, 'error')
+            this.bot.log(this.bot.isMobile, 'POLL', 'An error occurred:' + error, false, 'error')
         }
     }
 

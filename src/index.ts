@@ -93,11 +93,11 @@ export class MicrosoftRewardsBot {
         cluster.on('exit', (worker, code) => {
             this.activeWorkers -= 1
 
-            log('main', 'MAIN-WORKER', `Worker ${worker.process.pid} destroyed | Code: ${code} | Active workers: ${this.activeWorkers}`, 'warn')
+            log('main', 'MAIN-WORKER', `Worker ${worker.process.pid} destroyed | Code: ${code} | Active workers: ${this.activeWorkers}`, false, 'warn')
 
             // Check if all workers have exited
             if (this.activeWorkers === 0) {
-                log('main', 'MAIN-WORKER', 'All workers destroyed. Exiting main process!', 'warn')
+                log('main', 'MAIN-WORKER', 'All workers destroyed. Exiting main process!', false, 'warn')
                 process.exit(0)
             }
         })
@@ -132,10 +132,10 @@ export class MicrosoftRewardsBot {
                 await this.Mobile(account)
             }
 
-            log('main', 'MAIN-WORKER', `Completed tasks for account ${account.email}`, 'log', 'green')
+            log('main', 'MAIN-WORKER', `🔔 Completed tasks for account ${account.email}`, true, 'log', 'green')
         }
 
-        log(this.isMobile, 'MAIN-PRIMARY', 'Completed tasks for ALL accounts', 'log', 'green')
+        log(this.isMobile, 'MAIN-PRIMARY', '✅ Completed tasks for ALL accounts', true, 'log', 'green')
         process.exit()
     }
 
@@ -155,7 +155,7 @@ export class MicrosoftRewardsBot {
 
         this.pointsInitial = data.userStatus.availablePoints
 
-        log(this.isMobile, 'MAIN-POINTS', `Current point count: ${this.pointsInitial}`)
+        log(this.isMobile, 'MAIN-POINTS', `Current point count for ${account.email} : ${data.userStatus.availablePoints}`)
 
         const browserEnarablePoints = await this.browser.func.getBrowserEarnablePoints()
 
@@ -168,7 +168,7 @@ export class MicrosoftRewardsBot {
 
         // If runOnZeroPoints is false and 0 points to earn, don't continue
         if (!this.config.runOnZeroPoints && this.pointsCanCollect === 0) {
-            log(this.isMobile, 'MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!', 'log', 'yellow')
+            log(this.isMobile, 'MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!', false, 'log', 'yellow')
 
             // Close desktop browser
             await this.browser.func.closeBrowser(browser, account.email)
@@ -233,7 +233,7 @@ export class MicrosoftRewardsBot {
 
         // If runOnZeroPoints is false and 0 points to earn, don't continue
         if (!this.config.runOnZeroPoints && this.pointsCanCollect === 0) {
-            log(this.isMobile, 'MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!', 'log', 'yellow')
+            log(this.isMobile, 'MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!', false, 'log', 'yellow')
 
             // Close mobile browser
             await this.browser.func.closeBrowser(browser, account.email)
@@ -271,9 +271,9 @@ export class MicrosoftRewardsBot {
 
                 // Exit if retries are exhausted
                 if (this.mobileRetryAttempts > this.config.searchSettings.retryMobileSearchAmount) {
-                    log(this.isMobile, 'MAIN', `Max retry limit of ${this.config.searchSettings.retryMobileSearchAmount} reached. Exiting retry loop`, 'warn')
+                    log(this.isMobile, 'MAIN', `Max retry limit of ${this.config.searchSettings.retryMobileSearchAmount} reached. Exiting retry loop`, false, 'warn')
                 } else {
-                    log(this.isMobile, 'MAIN', `Attempt ${this.mobileRetryAttempts}/${this.config.searchSettings.retryMobileSearchAmount}: Unable to complete mobile searches, bad User-Agent? Increase search delay? Retrying...`, 'log', 'yellow')
+                    log(this.isMobile, 'MAIN', `Attempt ${this.mobileRetryAttempts}/${this.config.searchSettings.retryMobileSearchAmount}: Unable to complete mobile searches, bad User-Agent? Increase search delay? Retrying...`, false, 'log', 'yellow')
 
                     // Close mobile browser
                     await this.browser.func.closeBrowser(browser, account.email)
@@ -287,7 +287,7 @@ export class MicrosoftRewardsBot {
 
         const afterPointAmount = await this.browser.func.getCurrentPoints()
 
-        log(this.isMobile, 'MAIN-POINTS', `The script collected ${afterPointAmount - this.pointsInitial} points today`)
+        log(this.isMobile, 'MAIN-POINTS', `💰 The script collected ${afterPointAmount - this.pointsInitial} points for ${account.email} today\n📈 Current point count: ${afterPointAmount}`, true)
 
         // Close mobile browser
         await this.browser.func.closeBrowser(browser, account.email)
@@ -303,12 +303,12 @@ async function main() {
         await rewardsBot.initialize()
         await rewardsBot.run()
     } catch (error) {
-        log(false, 'MAIN-ERROR', `Error running desktop bot: ${error}`, 'error')
+        log(false, 'MAIN-ERROR', `Error running desktop bot: ${error}`, false, 'error')
     }
 }
 
 // Start the bots
 main().catch(error => {
-    log('main', 'MAIN-ERROR', `Error running bots: ${error}`, 'error')
+    log('main', 'MAIN-ERROR', `Error running bots: ${error}`, false, 'error')
     process.exit(1)
 })

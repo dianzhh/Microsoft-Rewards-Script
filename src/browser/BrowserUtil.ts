@@ -58,9 +58,9 @@ export default class BrowserUtil {
                 return newTab
             }
 
-            throw this.bot.log(this.bot.isMobile, 'GET-NEW-TAB', 'Unable to get latest tab', 'error')
+            throw this.bot.log(this.bot.isMobile, 'GET-NEW-TAB', 'Unable to get latest tab', false, 'error')
         } catch (error) {
-            throw this.bot.log(this.bot.isMobile, 'GET-NEW-TAB', 'An error occurred:' + error, 'error')
+            throw this.bot.log(this.bot.isMobile, 'GET-NEW-TAB', 'An error occurred:' + error, false, 'error')
         }
     }
 
@@ -73,19 +73,19 @@ export default class BrowserUtil {
             let homeTabURL: URL
 
             if (!homeTab) {
-                throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Home tab could not be found!', 'error')
+                throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Home tab could not be found!', false, 'error')
 
             } else {
                 homeTabURL = new URL(homeTab.url())
 
                 if (homeTabURL.hostname !== 'rewards.bing.com') {
-                    throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Reward page hostname is invalid: ' + homeTabURL.host, 'error')
+                    throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Reward page hostname is invalid: ' + homeTabURL.host, false, 'error')
                 }
             }
 
             const workerTab = pages[2]
             if (!workerTab) {
-                throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Worker tab could not be found!', 'error')
+                throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'Worker tab could not be found!', false, 'error')
             }
 
             return {
@@ -94,7 +94,7 @@ export default class BrowserUtil {
             }
 
         } catch (error) {
-            throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'An error occurred:' + error, 'error')
+            throw this.bot.log(this.bot.isMobile, 'GET-TABS', 'An error occurred:' + error, false, 'error')
         }
     }
 
@@ -111,7 +111,7 @@ export default class BrowserUtil {
             }
 
         } catch (error) {
-            throw this.bot.log(this.bot.isMobile, 'RELOAD-BAD-PAGE', 'An error occurred:' + error, 'error')
+            throw this.bot.log(this.bot.isMobile, 'RELOAD-BAD-PAGE', 'An error occurred:' + error, false, 'error')
         }
     }
 

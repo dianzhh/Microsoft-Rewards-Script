@@ -47,7 +47,7 @@ export class Quiz extends Workers {
                         const refreshSuccess = await this.bot.browser.func.waitForQuizRefresh(page)
                         if (!refreshSuccess) {
                             await page.close()
-                            this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred, refresh was unsuccessful', 'error')
+                            this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred, refresh was unsuccessful', false, 'error')
                             return
                         }
                     }
@@ -69,7 +69,7 @@ export class Quiz extends Workers {
                             const refreshSuccess = await this.bot.browser.func.waitForQuizRefresh(page)
                             if (!refreshSuccess) {
                                 await page.close()
-                                this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred, refresh was unsuccessful', 'error')
+                                this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred, refresh was unsuccessful', false, 'error')
                                 return
                             }
                         }
@@ -85,7 +85,7 @@ export class Quiz extends Workers {
             this.bot.log(this.bot.isMobile, 'QUIZ', 'Completed the quiz successfully')
         } catch (error) {
             await page.close()
-            this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred:' + error, 'error')
+            this.bot.log(this.bot.isMobile, 'QUIZ', 'An error occurred:' + error, false, 'error')
         }
     }
 

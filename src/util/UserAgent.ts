@@ -54,7 +54,7 @@ export async function getChromeVersion(isMobile: boolean): Promise<string> {
         return data.channels.Stable.version
 
     } catch (error) {
-        throw log(isMobile, 'USERAGENT-CHROME-VERSION', 'An error occurred:' + error, 'error')
+        throw log(isMobile, 'USERAGENT-CHROME-VERSION', 'An error occurred:' + error, false, 'error')
     }
 }
 
@@ -78,7 +78,7 @@ export async function getEdgeVersions(isMobile: boolean) {
 
 
     } catch (error) {
-        throw log(isMobile, 'USERAGENT-EDGE-VERSION', 'An error occurred:' + error, 'error')
+        throw log(isMobile, 'USERAGENT-EDGE-VERSION', 'An error occurred:' + error, false, 'error')
     }
 }
 
@@ -138,6 +138,6 @@ export async function updateFingerprintUserAgent(fingerprint: BrowserFingerprint
 
         return fingerprint
     } catch (error) {
-        throw log(isMobile, 'USER-AGENT-UPDATE', 'An error occurred:' + error, 'error')
+        throw log(isMobile, 'USER-AGENT-UPDATE', 'An error occurred:' + error, false, 'error')
     }
 }

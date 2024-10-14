@@ -16,7 +16,7 @@ export class UrlReward extends Workers {
             this.bot.log(this.bot.isMobile, 'URL-REWARD', 'Completed the UrlReward successfully')
         } catch (error) {
             await page.close()
-            this.bot.log(this.bot.isMobile, 'URL-REWARD', 'An error occurred:' + error, 'error')
+            this.bot.log(this.bot.isMobile, 'URL-REWARD', 'An error occurred:' + error, false, 'error')
         }
     }
 

@@ -49,7 +49,7 @@ export class Workers {
 
             // Ensure parentPromotion exists before proceeding
             if (!punchCard.parentPromotion?.title) {
-                this.bot.log(this.bot.isMobile, 'PUNCH-CARD', `Skipped punchcard "${punchCard.name}" | Reason: Parent promotion is missing!`, 'warn')
+                this.bot.log(this.bot.isMobile, 'PUNCH-CARD', `Skipped punchcard "${punchCard.name}" | Reason: Parent promotion is missing!`, false, 'warn')
                 continue
             }
 
@@ -213,7 +213,7 @@ export class Workers {
 
                     // Unsupported types
                     default:
-                        this.bot.log(this.bot.isMobile, 'ACTIVITY', `Skipped activity "${activity.title}" | Reason: Unsupported type: "${activity.promotionType}"!`, 'warn')
+                        this.bot.log(this.bot.isMobile, 'ACTIVITY', `Skipped activity "${activity.title}" | Reason: Unsupported type: "${activity.promotionType}"!`, false, 'warn')
                         break
                 }
 
@@ -221,7 +221,7 @@ export class Workers {
                 await this.bot.utils.wait(2000)
 
             } catch (error) {
-                this.bot.log(this.bot.isMobile, 'ACTIVITY', 'An error occurred:' + error, 'error')
+                this.bot.log(this.bot.isMobile, 'ACTIVITY', 'An error occurred:' + error, false, 'error')
             }
 
         }

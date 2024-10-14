@@ -62,7 +62,7 @@ export class Login {
 
         } catch (error) {
             // Throw and don't continue
-            throw this.bot.log(this.bot.isMobile, 'LOGIN', 'An error occurred:' + error, 'error')
+            throw this.bot.log(this.bot.isMobile, 'LOGIN', 'An error occurred:' + error, false, 'error')
         }
     }
 
@@ -81,7 +81,7 @@ export class Login {
             await this.bot.browser.utils.reloadBadPage(page)
             await this.checkLoggedIn(page)
         } catch (error) {
-            this.bot.log(this.bot.isMobile, 'LOGIN', 'An error occurred: ' + error, 'error')
+            this.bot.log(this.bot.isMobile, 'LOGIN', 'An error occurred: ' + error, false, 'error')
         }
     }
 
@@ -121,7 +121,7 @@ export class Login {
                 await this.authSMSVerification(page)
             }
         } catch (error) {
-            this.bot.log(this.bot.isMobile, 'LOGIN', `2FA handling failed: ${error}`)
+            this.bot.log(this.bot.isMobile, 'LOGIN', `2FA handling failed: ${error}`, true)
         }
     }
 
@@ -131,8 +131,8 @@ export class Login {
             return await element.textContent()
         } catch {
             if (this.bot.config.parallel) {
-                this.bot.log(this.bot.isMobile, 'LOGIN', 'Script running in parallel, can only send 1 2FA request per account at a time!', 'log', 'yellow')
-                this.bot.log(this.bot.isMobile, 'LOGIN', 'Trying again in 60 seconds! Please wait...', 'log', 'yellow')
+                this.bot.log(this.bot.isMobile, 'LOGIN', 'Script running in parallel, can only send 1 2FA request per account at a time!', false, 'log', 'yellow')
+                this.bot.log(this.bot.isMobile, 'LOGIN', 'Trying again in 60 seconds! Please wait...', false, 'log', 'yellow')
 
                 // eslint-disable-next-line no-constant-condition
                 while (true) {
@@ -232,7 +232,7 @@ export class Login {
             }
 
         } catch (error) {
-            this.bot.log(this.bot.isMobile, 'LOGIN-BING', 'An error occurred:' + error, 'error')
+            this.bot.log(this.bot.isMobile, 'LOGIN-BING', 'An error occurred:' + error, false, 'error')
         }
     }
 
@@ -299,7 +299,7 @@ export class Login {
         await this.bot.utils.wait(2000)
         const isLocked = await page.waitForSelector('#serviceAbuseLandingTitle', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false)
         if (isLocked) {
-            throw this.bot.log(this.bot.isMobile, 'CHECK-LOCKED', 'This account has been locked! Remove the account from "accounts.json" and restart!', 'error')
+            throw this.bot.log(this.bot.isMobile, 'CHECK-LOCKED', 'This account has been locked! Remove the account from "accounts.json" and restart!', true, 'error')
         }
     }
 }

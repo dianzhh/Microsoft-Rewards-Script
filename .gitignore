@@ -1,8 +1,10 @@
 sessions/
 dist/
+savedist/
 node_modules/
 package-lock.json
 accounts.json
+config.json
 notes
 accounts.dev.json
 accounts.main.json
