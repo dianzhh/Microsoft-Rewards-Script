@@ -6,7 +6,7 @@ WORKDIR /usr/src/microsoft-rewards-script
 
 RUN sed -i 's@deb.debian.org@repo.huaweicloud.com@g' /etc/apt/sources.list.d/debian.sources
 
-# Install necessary dependencies for Playwright and cron
+# Install jq, cron, gettext-base, Playwright dependencies
 RUN apt-get update && apt-get install -y \
     jq \
     vim \
@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     tzdata \
     wget \
+    tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy all files to the working directory
