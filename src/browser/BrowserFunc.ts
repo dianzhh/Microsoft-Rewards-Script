@@ -43,7 +43,11 @@ export default class BrowserFunc {
                 // Check if account is suspended
                 const isSuspended = await page.waitForSelector('#suspendedAccountHeader', { state: 'visible', timeout: 2000 }).then(() => true).catch(() => false)
                 if (isSuspended) {
+<<<<<<< HEAD
                     this.bot.log(this.bot.isMobile, 'GO-HOME', 'This account is suspended!', true, 'error')
+=======
+                    this.bot.log('GO-HOME', '❗ This account is suspended!', true, 'error')
+>>>>>>> 2e00b48 (optional message to send)
                     throw new Error('Account has been suspended!')
                 }
 
@@ -74,7 +78,11 @@ export default class BrowserFunc {
             }
 
         } catch (error) {
+<<<<<<< HEAD
             throw this.bot.log(this.bot.isMobile, 'GO-HOME', 'An error occurred:' + error, false, 'error')
+=======
+            throw this.bot.log('GO-HOME', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
     }
 
@@ -103,9 +111,15 @@ export default class BrowserFunc {
                 return targetScript?.innerText ? targetScript.innerText : null
             })
 
+<<<<<<< HEAD
             if (!scriptContent) {
                 throw this.bot.log(this.bot.isMobile, 'GET-DASHBOARD-DATA', 'Dashboard data not found within script', false, 'error')
             }
+=======
+        if (!scriptContent) {
+            throw this.bot.log('GET-DASHBOARD-DATA', '❗ Dashboard data not found within script', true, 'error')
+        }
+>>>>>>> 2e00b48 (optional message to send)
 
             // Extract the dashboard object from the script content
             const dashboardData = await this.bot.homePage.evaluate(scriptContent => {
@@ -123,10 +137,15 @@ export default class BrowserFunc {
                 throw this.bot.log(this.bot.isMobile, 'GET-DASHBOARD-DATA', 'Unable to parse dashboard script', false, 'error')
             }
 
+<<<<<<< HEAD
             return dashboardData
 
         } catch (error) {
             throw this.bot.log(this.bot.isMobile, 'GET-DASHBOARD-DATA', `Error fetching dashboard data: ${error}`, false, 'error')
+=======
+        if (!dashboardData) {
+            throw this.bot.log('GET-DASHBOARD-DATA', '❗ Unable to parse dashboard script', true, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
 
     }
@@ -187,7 +206,11 @@ export default class BrowserFunc {
                 totalEarnablePoints
             }
         } catch (error) {
+<<<<<<< HEAD
             throw this.bot.log(this.bot.isMobile, 'GET-BROWSER-EARNABLE-POINTS', 'An error occurred:' + error, false, 'error')
+=======
+            throw this.bot.log('GET-BROWSER-EARNABLE-POINTS', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
     }
 
@@ -244,7 +267,11 @@ export default class BrowserFunc {
 
             return points
         } catch (error) {
+<<<<<<< HEAD
             throw this.bot.log(this.bot.isMobile, 'GET-APP-EARNABLE-POINTS', 'An error occurred:' + error, false, 'error')
+=======
+            throw this.bot.log('GET-APP-EARNABLE-POINTS', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
     }
 
@@ -258,7 +285,11 @@ export default class BrowserFunc {
 
             return data.userStatus.availablePoints
         } catch (error) {
+<<<<<<< HEAD
             throw this.bot.log(this.bot.isMobile, 'GET-CURRENT-POINTS', 'An error occurred:' + error, false, 'error')
+=======
+            throw this.bot.log('GET-CURRENT-POINTS', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
     }
 
@@ -284,6 +315,7 @@ export default class BrowserFunc {
                     const quizData = JSON.parse(match[1])
                     return quizData
                 } else {
+<<<<<<< HEAD
                     throw this.bot.log(this.bot.isMobile, 'GET-QUIZ-DATA', 'Quiz data not found within script', false, 'error')
                 }
             } else {
@@ -292,6 +324,16 @@ export default class BrowserFunc {
 
         } catch (error) {
             throw this.bot.log(this.bot.isMobile, 'GET-QUIZ-DATA', 'An error occurred:' + error, false, 'error')
+=======
+                    throw this.bot.log('GET-QUIZ-DATA', '❗ Quiz data not found within script', true, 'error')
+                }
+            } else {
+                throw this.bot.log('GET-QUIZ-DATA', '❗ Script containing quiz data not found', true, 'error')
+            }
+
+        } catch (error) {
+            throw this.bot.log('GET-QUIZ-DATA', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
 
     }
@@ -303,7 +345,11 @@ export default class BrowserFunc {
 
             return true
         } catch (error) {
+<<<<<<< HEAD
             this.bot.log(this.bot.isMobile, 'QUIZ-REFRESH', 'An error occurred:' + error, false, 'error')
+=======
+            this.bot.log('QUIZ-REFRESH', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
             return false
         }
     }
@@ -337,7 +383,11 @@ export default class BrowserFunc {
                 selector = `a[href*="${element.attribs.href}"]`
             }
         } catch (error) {
+<<<<<<< HEAD
             this.bot.log(this.bot.isMobile, 'GET-PUNCHCARD-ACTIVITY', 'An error occurred:' + error, false, 'error')
+=======
+            this.bot.log('GET-PUNCHCARD-ACTIVITY', '❗ An error occurred:' + error, false, 'error')
+>>>>>>> 2e00b48 (optional message to send)
         }
 
         return selector
