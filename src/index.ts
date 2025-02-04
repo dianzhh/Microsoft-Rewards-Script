@@ -93,15 +93,13 @@ export class MicrosoftRewardsBot {
         cluster.on('exit', (worker, code) => {
             this.activeWorkers -= 1
 
-            log('MAIN-WORKER', `Worker ${worker.process.pid} destroyed | Code: ${code} | Active workers: ${this.activeWorkers}`, 'warn')
+            log('main', 'MAIN-WORKER', `Worker ${worker.process.pid} destroyed | Code: ${code} | Active workers: ${this.activeWorkers}`, false, 'warn')
 
             // Check if all workers have exited
             if (this.activeWorkers === 0) {
-                log('MAIN-WORKER', 'All workers destroyed. Exiting main process!', 'warn')
+                log('main', 'MAIN-WORKER', 'All workers destroyed. Exiting main process!', false, 'warn')
                 process.exit(0)
             }
-
-            log('MAIN-WORKER', `⚠️ Worker ${worker.process.pid} destroyed | Code: ${code} | Active workers: ${this.activeWorkers}`, false, 'warn')
         })
     }
 
@@ -115,7 +113,7 @@ export class MicrosoftRewardsBot {
 
     private async runTasks(accounts: Account[]) {
         for (const account of accounts) {
-            log('MAIN-WORKER', `Started tasks for account ${account.email}`)
+            log('main', 'MAIN-WORKER', `Started tasks for account ${account.email}`)
 
             this.axios = new Axios(account.proxy)
             if (this.config.parallel) {
@@ -134,15 +132,11 @@ export class MicrosoftRewardsBot {
                 await this.Mobile(account)
             }
 
-            // Mobile Searches
-            await this.Mobile(account)
-
-            log('MAIN-WORKER', `Completed tasks for account ${account.email}`)
+            log('main', 'MAIN-WORKER', `🔔 Completed tasks for account ${account.email}`, true, 'log', 'green')
         }
 
-        log('MAIN-PRIMARY', 'Completed tasks for ALL accounts')
-        log('MAIN-PRIMARY', 'All workers destroyed!')
-        process.exit(0)
+        log(this.isMobile, 'MAIN-PRIMARY', 'Completed tasks for ALL accounts', false, 'log', 'green')
+        process.exit()
     }
 
     // Desktop
@@ -158,7 +152,10 @@ export class MicrosoftRewardsBot {
         await this.browser.func.goHome(this.homePage)
 
         const data = await this.browser.func.getDashboardData()
-        log('MAIN-POINTS', `Current point count: ${data.userStatus.availablePoints}`)
+
+        this.pointsInitial = data.userStatus.availablePoints
+
+        log(this.isMobile, 'MAIN-POINTS', `Current point count: ${this.pointsInitial}`)
 
         const browserEnarablePoints = await this.browser.func.getBrowserEarnablePoints()
 
@@ -167,20 +164,16 @@ export class MicrosoftRewardsBot {
             browserEnarablePoints.desktopSearchPoints
             + browserEnarablePoints.morePromotionsPoints
 
-        const earnablePoints = browserEnarablePoints + appEarnablePoints
-        this.collectedPoints = earnablePoints
-        log('MAIN-POINTS', `You can earn ${earnablePoints} points today (Browser: ${browserEnarablePoints} points, App: ${appEarnablePoints} points)`)
+        log(this.isMobile, 'MAIN-POINTS', `You can earn ${this.pointsCanCollect} points today`)
 
         // If runOnZeroPoints is false and 0 points to earn, don't continue
-        if (!this.config.runOnZeroPoints && this.collectedPoints === 0) {
-            log('MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!')
+        if (!this.config.runOnZeroPoints && this.pointsCanCollect === 0) {
+            log(this.isMobile, 'MAIN', 'No points to earn and "runOnZeroPoints" is set to "false", stopping!', false, 'log', 'yellow')
 
             // Close desktop browser
             await this.browser.func.closeBrowser(browser, account.email)
             return
         }
-
-        log('MAIN-POINTS', `💵 You can earn ${earnablePoints} points today (Browser: ${browserEnarablePoints} points, App: ${appEarnablePoints} points)`)
 
         // Open a new tab to where the tasks are going to be completed
         const workerPage = await browser.newPage()
@@ -294,9 +287,7 @@ export class MicrosoftRewardsBot {
 
         const afterPointAmount = await this.browser.func.getCurrentPoints()
 
-        // If the new earnable is 0, means we got all the points, else retract
-        this.collectedPoints = earnablePoints === 0 ? this.collectedPoints : (this.collectedPoints - earnablePoints)
-        log('MAIN-POINTS', `The script collected ${this.collectedPoints} points today`)
+        log(this.isMobile, 'MAIN-POINTS', `💰 The script collected ${afterPointAmount - this.pointsInitial} points for ${account.email} today\n📈 Current point count: ${afterPointAmount}`, true)
 
         // Close mobile browser
         await this.browser.func.closeBrowser(browser, account.email)
