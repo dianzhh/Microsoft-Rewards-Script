@@ -1,6 +1,9 @@
 import { Webhook } from './Webhook'
 
-export function log(title: string, message: string, type?: 'log' | 'warn' | 'error') {
+export function log(title: string, message: string, webhookBool: boolean = false, type?: 'log' | 'warn' | 'error') {
+    /*
+    * webhookBool true: send to webhook
+    */
     const currentTime = new Date().toLocaleString()
 
     let str = ''
@@ -22,5 +25,5 @@ export function log(title: string, message: string, type?: 'log' | 'warn' | 'err
             break
     }
 
-    if (str) Webhook(str)
+    if (str && webhookBool) Webhook(str)
 }

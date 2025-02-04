@@ -37,7 +37,7 @@ export class Login {
                 // Check if account is locked
                 const isLocked = await page.waitForSelector('.serviceAbusePageContainer', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false)
                 if (isLocked) {
-                    this.bot.log('LOGIN', 'This account has been locked!', 'error')
+                    this.bot.log('LOGIN', '❗ This account has been locked!', true, 'error')
                     throw new Error('Account has been locked!')
                 }
 
@@ -58,7 +58,7 @@ export class Login {
 
         } catch (error) {
             // Throw and don't continue
-            throw this.bot.log('LOGIN', 'An error occurred:' + error, 'error')
+            throw this.bot.log('LOGIN', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -68,7 +68,7 @@ export class Login {
             await this.enterPassword(page, password)
             await this.checkLoggedIn(page)
         } catch (error: any) {
-            this.bot.log('LOGIN', 'An error occurred: ' + error.message, 'error')
+            this.bot.log('LOGIN', '❗ An error occurred: ' + error.message, false, 'error')
         }
     }
 
@@ -195,7 +195,7 @@ export class Login {
             }
 
         } catch (error) {
-            this.bot.log('LOGIN-BING', 'An error occurred:' + error, 'error')
+            this.bot.log('LOGIN-BING', '❗ An error occurred:' + error, false, 'error')
         }
     }
 

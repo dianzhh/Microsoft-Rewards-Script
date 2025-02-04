@@ -82,9 +82,9 @@ export default class BrowserUtil {
                 return newTab
             }
 
-            throw this.bot.log('GET-NEW-TAB', 'Unable to get latest tab', 'error')
+            throw this.bot.log('GET-NEW-TAB', '❗ Unable to get latest tab', true, 'error')
         } catch (error) {
-            throw this.bot.log('GET-NEW-TAB', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-NEW-TAB', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -97,19 +97,19 @@ export default class BrowserUtil {
             let homeTabURL: URL
 
             if (!homeTab) {
-                throw this.bot.log('GET-TABS', 'Home tab could not be found!', 'error')
+                throw this.bot.log('GET-TABS', '❗ Home tab could not be found!', true, 'error')
 
             } else {
                 homeTabURL = new URL(homeTab.url())
 
                 if (homeTabURL.hostname !== 'rewards.bing.com') {
-                    throw this.bot.log('GET-TABS', 'Reward page hostname is invalid: ' + homeTabURL.host, 'error')
+                    throw this.bot.log('GET-TABS', '❗ Reward page hostname is invalid: ' + homeTabURL.host, true, 'error')
                 }
             }
 
             const workerTab = pages[2]
             if (!workerTab) {
-                throw this.bot.log('GET-TABS', 'Worker tab could not be found!', 'error')
+                throw this.bot.log('GET-TABS', '❗ Worker tab could not be found!', true, 'error')
             }
 
             return {
@@ -118,7 +118,7 @@ export default class BrowserUtil {
             }
 
         } catch (error) {
-            throw this.bot.log('GET-TABS', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-TABS', '❗ An error occurred:' + error, false, 'error')
         }
     }
 

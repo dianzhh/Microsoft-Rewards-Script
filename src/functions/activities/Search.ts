@@ -68,13 +68,13 @@ export class Search extends Workers {
 
             // Only for mobile searches
             if (maxLoop > 3 && this.bot.isMobile) {
-                this.bot.log('SEARCH-BING-MOBILE', 'Search didn\'t gain point for 3 iterations, likely bad User-Agent', 'warn')
+                this.bot.log('SEARCH-BING-MOBILE', '⚠️ Search didn\'t gain point for 3 iterations, likely bad User-Agent', false, 'warn')
                 break
             }
 
             // If we didn't gain points for 10 iterations, assume it's stuck
             if (maxLoop > 10) {
-                this.bot.log('SEARCH-BING', 'Search didn\'t gain point for 10 iterations aborting searches', 'warn')
+                this.bot.log('SEARCH-BING', '⚠️ Search didn\'t gain point for 10 iterations aborting searches', false, 'warn')
                 maxLoop = 0 // Reset to 0 so we can retry with related searches below
                 break
             }
@@ -119,7 +119,7 @@ export class Search extends Workers {
 
                         // Try 5 more times, then we tried a total of 15 times, fair to say it's stuck
                         if (maxLoop > 5) {
-                            this.bot.log('SEARCH-BING-EXTRA', 'Search didn\'t gain point for 5 iterations aborting searches', 'warn')
+                            this.bot.log('SEARCH-BING-EXTRA', '⚠️ Search didn\'t gain point for 5 iterations aborting searches', false,'warn')
                             return
                         }
                     }
@@ -180,13 +180,13 @@ export class Search extends Workers {
 
             } catch (error) {
                 if (i === 5) {
-                    this.bot.log('SEARCH-BING', 'Failed after 5 retries... An error occurred:' + error, 'error')
+                    this.bot.log('SEARCH-BING', '❗ Failed after 5 retries... An error occurred:' + error, false, 'error')
                     break
 
                 }
 
-                this.bot.log('SEARCH-BING', 'Search failed, An error occurred:' + error, 'error')
-                this.bot.log('SEARCH-BING', `Retrying search, attempt ${i}/5`, 'warn')
+                this.bot.log('SEARCH-BING', '❗ Search failed, An error occurred:' + error, false, 'error')
+                this.bot.log('SEARCH-BING', `⚠️ Search failed, Retrying search, attempt ${i}/5`, false, 'warn')
 
                 // Reset the tabs
                 const lastTab = await this.bot.browser.utils.getLatestTab(searchPage)
@@ -196,7 +196,7 @@ export class Search extends Workers {
             }
         }
 
-        this.bot.log('SEARCH-BING', 'Search failed after 5 retries, ending', 'error')
+        this.bot.log('SEARCH-BING', '❗ Search failed after 5 retries, ending', false, 'error')
         return await this.bot.browser.func.getSearchPoints()
     }
 
@@ -235,7 +235,7 @@ export class Search extends Workers {
                 }
 
             } catch (error) {
-                this.bot.log('SEARCH-GOOGLE-TRENDS', 'An error occurred:' + error, 'error')
+                this.bot.log('SEARCH-GOOGLE-TRENDS', '❗ An error occurred:' + error, false, 'error')
             }
         }
 
@@ -256,7 +256,7 @@ export class Search extends Workers {
 
             return response.data[1] as string[]
         } catch (error) {
-            this.bot.log('SEARCH-BING-RELATED', 'An error occurred:' + error, 'error')
+            this.bot.log('SEARCH-BING-RELATED', '❗ An error occurred:' + error, false, 'error')
         }
         return []
     }
@@ -280,7 +280,7 @@ export class Search extends Workers {
             }, randomScrollPosition)
 
         } catch (error) {
-            this.bot.log('SEARCH-RANDOM-SCROLL', 'An error occurred:' + error, 'error')
+            this.bot.log('SEARCH-RANDOM-SCROLL', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -309,7 +309,7 @@ export class Search extends Workers {
             }
 
         } catch (error) {
-            this.bot.log('SEARCH-RANDOM-CLICK', 'An error occurred:' + error, 'error')
+            this.bot.log('SEARCH-RANDOM-CLICK', '❗ An error occurred:' + error, false, 'error')
         }
     }
 

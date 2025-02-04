@@ -41,7 +41,7 @@ export default class BrowserFunc {
                 // Check if account is suspended
                 const isSuspended = await page.waitForSelector('#suspendedAccountHeader', { state: 'visible', timeout: 2000 }).then(() => true).catch(() => false)
                 if (isSuspended) {
-                    this.bot.log('GO-HOME', 'This account is suspended!', 'error')
+                    this.bot.log('GO-HOME', '❗ This account is suspended!', true, 'error')
                     throw new Error('Account has been suspended!')
                 }
 
@@ -72,7 +72,7 @@ export default class BrowserFunc {
             }
 
         } catch (error) {
-            throw this.bot.log('GO-HOME', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GO-HOME', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -101,7 +101,7 @@ export default class BrowserFunc {
         })
 
         if (!scriptContent) {
-            throw this.bot.log('GET-DASHBOARD-DATA', 'Dashboard data not found within script', 'error')
+            throw this.bot.log('GET-DASHBOARD-DATA', '❗ Dashboard data not found within script', true, 'error')
         }
 
         // Extract the dashboard object from the script content
@@ -116,7 +116,7 @@ export default class BrowserFunc {
         }, scriptContent)
 
         if (!dashboardData) {
-            throw this.bot.log('GET-DASHBOARD-DATA', 'Unable to parse dashboard script', 'error')
+            throw this.bot.log('GET-DASHBOARD-DATA', '❗ Unable to parse dashboard script', true, 'error')
         }
 
         return dashboardData
@@ -168,7 +168,7 @@ export default class BrowserFunc {
 
             return totalEarnablePoints
         } catch (error) {
-            throw this.bot.log('GET-BROWSER-EARNABLE-POINTS', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-BROWSER-EARNABLE-POINTS', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -218,7 +218,7 @@ export default class BrowserFunc {
 
             return totalEarnablePoints
         } catch (error) {
-            throw this.bot.log('GET-APP-EARNABLE-POINTS', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-APP-EARNABLE-POINTS', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -232,7 +232,7 @@ export default class BrowserFunc {
 
             return data.userStatus.availablePoints
         } catch (error) {
-            throw this.bot.log('GET-CURRENT-POINTS', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-CURRENT-POINTS', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
@@ -258,14 +258,14 @@ export default class BrowserFunc {
                     const quizData = JSON.parse(match[1])
                     return quizData
                 } else {
-                    throw this.bot.log('GET-QUIZ-DATA', 'Quiz data not found within script', 'error')
+                    throw this.bot.log('GET-QUIZ-DATA', '❗ Quiz data not found within script', true, 'error')
                 }
             } else {
-                throw this.bot.log('GET-QUIZ-DATA', 'Script containing quiz data not found', 'error')
+                throw this.bot.log('GET-QUIZ-DATA', '❗ Script containing quiz data not found', true, 'error')
             }
 
         } catch (error) {
-            throw this.bot.log('GET-QUIZ-DATA', 'An error occurred:' + error, 'error')
+            throw this.bot.log('GET-QUIZ-DATA', '❗ An error occurred:' + error, false, 'error')
         }
 
     }
@@ -277,7 +277,7 @@ export default class BrowserFunc {
 
             return true
         } catch (error) {
-            this.bot.log('QUIZ-REFRESH', 'An error occurred:' + error, 'error')
+            this.bot.log('QUIZ-REFRESH', '❗ An error occurred:' + error, false, 'error')
             return false
         }
     }
@@ -311,7 +311,7 @@ export default class BrowserFunc {
                 selector = `a[href*="${element.attribs.href}"]`
             }
         } catch (error) {
-            this.bot.log('GET-PUNCHCARD-ACTIVITY', 'An error occurred:' + error, 'error')
+            this.bot.log('GET-PUNCHCARD-ACTIVITY', '❗ An error occurred:' + error, false, 'error')
         }
 
         return selector

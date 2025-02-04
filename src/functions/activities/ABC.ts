@@ -38,14 +38,14 @@ export class ABC extends Workers {
             await page.close()
 
             if (i === maxIterations) {
-                this.bot.log('ABC', 'Failed to solve quiz, exceeded max iterations of 15', 'warn')
+                this.bot.log('ABC', '⚠️ Failed to solve quiz, exceeded max iterations of 15', false, 'warn')
             } else {
                 this.bot.log('ABC', 'Completed the ABC successfully')
             }
 
         } catch (error) {
             await page.close()
-            this.bot.log('ABC', 'An error occurred:' + error, 'error')
+            this.bot.log('ABC', '❗ An error occurred:' + error, false, 'error')
         }
     }
 

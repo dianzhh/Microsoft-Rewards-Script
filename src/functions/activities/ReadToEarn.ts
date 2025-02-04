@@ -67,7 +67,7 @@ export class ReadToEarn extends Workers {
 
             this.bot.log('READ-TO-EARN', 'Completed Read to Earn')
         } catch (error) {
-            this.bot.log('READ-TO-EARN', 'An error occurred:' + error, 'error')
+            this.bot.log('READ-TO-EARN', '❗ An error occurred:' + error, false, 'error')
         }
     }
 }

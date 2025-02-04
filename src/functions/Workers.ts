@@ -202,7 +202,7 @@ export class Workers {
                 await this.bot.utils.wait(2000)
 
             } catch (error) {
-                this.bot.log('ACTIVITY', 'An error occurred:' + error, 'error')
+                this.bot.log('ACTIVITY', '❗ An error occurred:' + error, false, 'error')
             }
 
         }

@@ -41,7 +41,7 @@ export class DailyCheckIn extends Workers {
 
             this.bot.log('DAILY-CHECK-IN', claimedPoint > 0 ? `Claimed ${claimedPoint} points` : 'Already claimed today')
         } catch (error) {
-            this.bot.log('DAILY-CHECK-IN', 'An error occurred:' + error, 'error')
+            this.bot.log('DAILY-CHECK-IN', '❗ An error occurred:' + error, false, 'error')
         }
     }
 
