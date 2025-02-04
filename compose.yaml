@@ -10,7 +10,7 @@ services:
       ### Replace "/path/to/" with the actual path to where you want to save the files on your local machine.
       - /home/tools/Microsoft-Rewards-Script/savedist/accounts.json:/usr/src/microsoft-rewards-script/dist/accounts.json
       - /home/tools/Microsoft-Rewards-Script/savedist/config.json:/usr/src/microsoft-rewards-script/dist/config.json 
-      - /home/tools/Microsoft-Rewards-Script/savedist/browser/sessions:/usr/src/microsoft-rewards-script/dist/browser/sessions # Optional, saves your login session
+      # - /home/tools/Microsoft-Rewards-Script/savedist/browser/sessions:/usr/src/microsoft-rewards-script/dist/browser/sessions # Optional, saves your login session
     environment:
       - NODE_ENV=production
       - CRON_SCHEDULE=0 7,15,20 * * * # Customize your schedule, use crontab.guru for formatting
