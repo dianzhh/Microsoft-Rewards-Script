@@ -3,6 +3,18 @@ Automated Microsoft Rewards script, however this time using TypeScript, Cheerio 
 
 Under development, however mainly for personal use!
 
+---
+
+## Changes by dianzh ##
+
+- optional message to send, see .\src\util\Logger.ts for detail
+- change compose.yaml to assign a static IP, for proxy
+- additional install vim in container
+- add start.sh, mainly to kill chromium (which should have closed but not, crashing my VPS repeatedly)
+- add run_daily_docker.sh, for scheduling e.g. `5 3-21/3 * * * /bin/bash /.../run_daily_docker.sh > /dev/null 2>&1`
+
+---
+
 ## How to setup ##
 1. Download or clone source code
 2. Run `npm i` to install the packages
