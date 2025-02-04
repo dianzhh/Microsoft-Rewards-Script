@@ -8,9 +8,6 @@ export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 ps -aux | grep "chromium\|npm\|run_daily" | grep -v "grep\|sh" | awk '{print $2}' | xargs kill -9 2>/dev/null
 echo "\033[0;33mchromium cleared\033[0m"
 
-# 更新配置文件
-node src/updateConfig.js
-
 # 设置时区
 echo "$TZ" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
