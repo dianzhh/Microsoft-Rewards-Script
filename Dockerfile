@@ -30,11 +30,13 @@ COPY . .
 
 # Install dependencies, set permissions, and build the script
 RUN npm install && \
-    chmod -R 755 /usr/src/microsoft-rewards-script/node_modules && \
-    npm run pre-build && \
+    chmod -R 755 /usr/src/microsoft-rewards-script/node_modules
+    
+RUN npm run pre-build && \
     chmod -R 755 /usr/src/microsoft-rewards-script && \
-    chmod +x /usr/src/microsoft-rewards-script/start.sh  && \
-    npm run build
+    chmod +x /usr/src/microsoft-rewards-script/start.sh
+    
+RUN npm run build
 
 # Copy cron file to cron directory
 # COPY src/crontab.template /etc/cron.d/microsoft-rewards-cron.template
