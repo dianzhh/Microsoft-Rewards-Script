@@ -1,7 +1,7 @@
-import {log} from '../util/Logger'
+const Logger_1 = require("../util/Logger");
 
 try {
-    log('MAIN', 'test pushplus', true)
+    Logger_1.log('main', 'LOGGER TEST', 'test message', true)
 } catch (error) {
     console.error(error)
 }
