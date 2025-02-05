@@ -14,4 +14,4 @@ SLEEPTIME=$((MINWAIT + RANDOM % (MAXWAIT - MINWAIT)))
 
 sleep $SLEEPTIME
 
-/usr/bin/docker restart netsky
+/usr/bin/docker restart microsoft-rewards-script
